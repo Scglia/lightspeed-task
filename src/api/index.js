@@ -1,16 +1,10 @@
-import {
-  fetchProductsBegin,
-  fetchProductsSuccess,
-  fetchProductsError
-} from "../actions";
-
 export const fetchProducts = () => {
   return new Promise((resolve, reject) => {
-    fetch("https://next.json-generator.com/api/json/get/4kiDK7gxZ")
+    return fetch("https://next.json-generator.com/api/json/get/4kiDK7gxZ")
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
-        resolve(json.products);
+        resolve(json);
       })
       .catch(error => reject(error));
   });

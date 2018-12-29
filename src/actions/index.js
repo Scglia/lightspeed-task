@@ -2,7 +2,7 @@ import {
   FETCH_PRODUCTS_BEGIN,
   FETCH_PRODUCTS_SUCCESS,
   FETCH_PRODUCTS_FAILURE
-} from "../ActionTypes.js";
+} from "../constants/ActionTypes.js";
 
 import * as api from "../api";
 
@@ -23,7 +23,7 @@ export const fetchProductsFailure = error => ({
 export const fetchProducts = () => {
   return dispatch => {
     dispatch(fetchProductsBegin());
-    api
+    return api
       .fetchProducts()
       .then(json => {
         dispatch(fetchProductsSuccess(json));
