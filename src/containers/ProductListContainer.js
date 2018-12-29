@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { fetchProducts } from "../actions";
 import { getVisibleProducts } from "../reducers/products";
 
@@ -22,7 +23,9 @@ class ProductListContainer extends React.Component {
     return (
       <ul>
         {products.map(product => (
-          <li key={product._id}>{product.title}</li>
+          <li key={product._id}>
+            <Link to={`/detail/${product._id}`}>{product.title}</Link>
+          </li>
         ))}
       </ul>
     );

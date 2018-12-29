@@ -9,7 +9,6 @@ const App = () => (
       <h1>Shopping Cart Example</h1>
       <nav>
         <Link to="/">Products</Link>
-        <Link to="/detail/lol">Details</Link>
       </nav>
       <hr />
       <Route exact path="/" component={ProductListContainer} />

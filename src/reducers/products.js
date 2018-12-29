@@ -10,6 +10,7 @@ const initialProductFetcherState = {
   error: null
 };
 
+// REDUCERS
 const fetcher = (state = initialProductFetcherState, action) => {
   switch (action.type) {
     case FETCH_PRODUCTS_BEGIN:
