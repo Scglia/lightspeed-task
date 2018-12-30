@@ -32,7 +32,7 @@ const ProductListContainer = ({ error, loading, products }) => {
           <ProductCard
             key={product._id}
             product={product}
-            onClick={() => null}
+            addToCart={() => null}
           />
         </ProductCardStyled>
       ))}
