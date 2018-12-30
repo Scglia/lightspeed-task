@@ -1,14 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchProducts } from "../actions";
 import { getVisibleProducts } from "../reducers/products";
 
 class ProductListContainer extends React.Component {
-  componentDidMount() {
-    this.props.fetchProducts();
-  }
-
   render() {
     const { error, loading, products } = this.props;
 
@@ -38,13 +33,4 @@ const mapStateToProps = state => ({
   error: state.products.fetcher.error
 });
 
-const mapDispatchToProps = dispatch => ({
-  fetchProducts: () => {
-    dispatch(fetchProducts());
-  }
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProductListContainer);
+export default connect(mapStateToProps)(ProductListContainer);
