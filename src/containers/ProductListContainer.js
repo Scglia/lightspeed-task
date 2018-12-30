@@ -1,7 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import styled from "styled-components";
 import { getVisibleProducts } from "../reducers/products";
+import ProductCard from "../components/ProductCard";
+
+const ProductWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: middle;
+  margin: 0 -15px; // compensates for cards padding
+`;
+
+const ProductCardStyled = styled.div`
+  width: 300px;
+  padding: 15px;
+`;
 
 const ProductListContainer = ({ error, loading, products }) => {
   if (error) {
@@ -13,13 +26,17 @@ const ProductListContainer = ({ error, loading, products }) => {
   }
 
   return (
-    <ul>
+    <ProductWrapper>
       {products.map(product => (
-        <li key={product._id}>
-          <Link to={`/detail/${product._id}`}>{product.title}</Link>
-        </li>
+        <ProductCardStyled>
+          <ProductCard
+            key={product._id}
+            product={product}
+            onClick={() => null}
+          />
+        </ProductCardStyled>
       ))}
-    </ul>
+    </ProductWrapper>
   );
 };
 

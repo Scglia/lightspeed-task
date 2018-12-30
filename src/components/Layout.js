@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const LayoutStyled = styled.div`
-  max-width: 60rem;
+  max-width: 1200px;
   margin: auto;
 `;
 
