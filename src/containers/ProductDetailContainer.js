@@ -2,30 +2,26 @@ import React from "react";
 import { connect } from "react-redux";
 import { getProduct } from "../reducers/products";
 
-class ProductDetailContainer extends React.Component {
-  render() {
-    const { error, loading, product } = this.props;
-
-    if (error) {
-      return <div>Error! {error.message}</div>;
-    }
-
-    if (loading) {
-      return <div>Loading...</div>;
-    }
-
-    if (product === undefined) {
-      return <div>Product not found</div>;
-    }
-
-    return (
-      <div>
-        <h2>Product Detail</h2>
-        {product.description}, {product.image}
-      </div>
-    );
+const ProductDetailContainer = ({ error, loading, product }) => {
+  if (error) {
+    return <div>Error! {error.message}</div>;
   }
-}
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (product === undefined) {
+    return <div>Product not found</div>;
+  }
+
+  return (
+    <div>
+      <h2>Product Detail</h2>
+      {product.description}, {product.image}
+    </div>
+  );
+};
 
 const mapStateToProps = (state, { match }) => ({
   product: getProduct(state.products, match.params.productId),

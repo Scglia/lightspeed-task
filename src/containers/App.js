@@ -1,20 +1,15 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import ProductListContainer from "./ProductListContainer";
 import ProductDetailContainer from "./ProductDetailContainer";
+import Layout from "../components/Layout";
 
 const App = () => (
   <Router>
-    <div>
-      <h1>Shopping Cart Example</h1>
-      <nav>
-        <Link to="/">Products</Link>
-      </nav>
-      <hr />
+    <Layout>
       <Route exact path="/" component={ProductListContainer} />
       <Route path="/detail/:productId" component={ProductDetailContainer} />
-      <hr />
-    </div>
+    </Layout>
   </Router>
 );
 
