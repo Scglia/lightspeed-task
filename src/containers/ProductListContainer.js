@@ -29,28 +29,34 @@ const ProductCardStyled = styled.div`
   }
 `;
 
-const ProductListContainer = ({ error, loading, products, addToCart }) => {
-  if (error) {
-    return <div>Error! {error.message}</div>;
-  }
+class ProductListContainer extends React.Component {
+  handleAddToCart = id => () => this.props.addToCart(id);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  render() {
+    const { error, loading, products } = this.props;
 
-  return (
-    <ProductWrapper>
-      {products.map(product => (
-        <ProductCardStyled key={product._id}>
-          <ProductCard
-            product={product}
-            addToCart={() => addToCart(product._id)}
-          />
-        </ProductCardStyled>
-      ))}
-    </ProductWrapper>
-  );
-};
+    if (error) {
+      return <div>Error! {error.message}</div>;
+    }
+
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+
+    return (
+      <ProductWrapper>
+        {products.map(product => (
+          <ProductCardStyled key={product._id}>
+            <ProductCard
+              product={product}
+              addToCart={this.handleAddToCart(product._id)}
+            />
+          </ProductCardStyled>
+        ))}
+      </ProductWrapper>
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   products: getVisibleProducts(state.products),

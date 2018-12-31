@@ -35,37 +35,42 @@ const Details = styled.div`
   }
 `;
 
-const ProductDetailContainer = ({ error, loading, product, addToCart }) => {
-  if (error) {
-    return <div>Error! {error.message}</div>;
+class ProductDetailContainer extends React.Component {
+  handleAddToCart = id => () => this.props.addToCart(id);
+
+  render() {
+    const { error, loading, product } = this.props;
+    if (error) {
+      return <div>Error! {error.message}</div>;
+    }
+
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+
+    if (product === undefined) {
+      return <div>Product not found</div>;
+    }
+
+    const { description, image, title, stock, price, _id } = product;
+
+    return (
+      <ProductDetailWrapper>
+        <Image src={image} alt={`Illustration for ${title}`} />
+        <Details>
+          <h2>{title}</h2>
+          <div>{description}</div>
+          <div>Quantity left: {stock.remaining}</div>
+          <div>Price: {price}</div>
+          <AddToCartButton
+            addToCart={this.handleAddToCart(_id)}
+            isSoldOut={stock.remaining === 0}
+          />
+        </Details>
+      </ProductDetailWrapper>
+    );
   }
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (product === undefined) {
-    return <div>Product not found</div>;
-  }
-
-  const { description, image, title, stock, price, _id } = product;
-
-  return (
-    <ProductDetailWrapper>
-      <Image src={image} alt={`Illustration for ${title}`} />
-      <Details>
-        <h2>{title}</h2>
-        <div>{description}</div>
-        <div>Quantity left: {stock.remaining}</div>
-        <div>Price: {price}</div>
-        <AddToCartButton
-          addToCart={() => addToCart(_id)}
-          isSoldOut={stock.remaining === 0}
-        />
-      </Details>
-    </ProductDetailWrapper>
-  );
-};
+}
 
 const mapStateToProps = (state, { match }) => ({
   product: getProduct(state.products, match.params.productId),

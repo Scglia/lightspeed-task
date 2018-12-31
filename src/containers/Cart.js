@@ -30,6 +30,8 @@ class Cart extends React.Component {
     this.handleCheckout = this.handleCheckout.bind(this);
   }
 
+  handleRemove = productId => () => this.props.removeFromCart(productId);
+
   toggleSuccessMessage() {
     this.setState({
       isSuccessMessageDisplayed: !this.state.isSuccessMessageDisplayed
@@ -42,7 +44,7 @@ class Cart extends React.Component {
   }
 
   render() {
-    const { error, loading, products, removeFromCart } = this.props;
+    const { error, loading, products } = this.props;
 
     if (error) {
       return <div>Error! {error.message}</div>;
@@ -69,7 +71,7 @@ class Cart extends React.Component {
                 <Title>{product.title}</Title>
                 <td>Quantity: {product.quantityInCart}</td>
                 <td>
-                  <button onClick={() => removeFromCart(product._id)}>
+                  <button onClick={this.handleRemove(product._id)}>
                     Remove
                   </button>
                 </td>
