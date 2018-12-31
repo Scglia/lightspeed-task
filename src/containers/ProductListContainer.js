@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { getVisibleProducts } from "../reducers/products";
-import ProductCard from "../components/ProductCard";
 import { addToCart } from "../actions/";
+import ProductCard from "../components/ProductCard";
 
 const ProductWrapper = styled.div`
   display: flex;

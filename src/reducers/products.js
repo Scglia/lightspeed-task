@@ -2,7 +2,9 @@ import { combineReducers } from "redux";
 import {
   FETCH_PRODUCTS_BEGIN,
   FETCH_PRODUCTS_FAILURE,
-  FETCH_PRODUCTS_SUCCESS
+  FETCH_PRODUCTS_SUCCESS,
+  ADD_TO_CART,
+  REMOVE_FROM_CART
 } from "../constants/ActionTypes";
 
 const initialProductFetcherState = {
@@ -46,6 +48,7 @@ const fetcher = (state = initialProductFetcherState, action) => {
 };
 
 const byId = (state = {}, action) => {
+  let productId, product;
   switch (action.type) {
     case FETCH_PRODUCTS_SUCCESS:
       return {
@@ -55,10 +58,33 @@ const byId = (state = {}, action) => {
           return obj;
         }, {})
       };
-    case FETCH_PRODUCTS_FAILURE:
+    case ADD_TO_CART:
+      productId = action.payload.productId;
+      product = state[productId];
+
       return {
         ...state,
-        items: []
+        [productId]: {
+          ...product,
+          stock: {
+            ...product.stock,
+            remaining: product.stock.remaining - 1
+          }
+        }
+      };
+    case REMOVE_FROM_CART:
+      productId = action.payload.productId;
+      product = state[productId];
+
+      return {
+        ...state,
+        [productId]: {
+          ...product,
+          stock: {
+            ...product.stock,
+            remaining: product.stock.remaining + action.payload.quantityToRemove
+          }
+        }
       };
     default:
       return state;

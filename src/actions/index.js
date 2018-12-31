@@ -3,7 +3,8 @@ import {
   FETCH_PRODUCTS_SUCCESS,
   FETCH_PRODUCTS_FAILURE,
   ADD_TO_CART,
-  REMOVE_FROM_CART
+  REMOVE_FROM_CART,
+  CLEAR_CART
 } from "../constants/ActionTypes.js";
 
 import * as api from "../api";
@@ -69,12 +70,6 @@ export const removeFromCart = (productId, quantityToRemove = 1) => {
   };
 };
 
-export const clearCart = () => {
-  return (dispatch, getState) => {
-    const { cart } = getState();
-
-    cart.addedIds.forEach(productId => {
-      dispatch(removeFromCart(productId, cart.quantityById[productId]));
-    });
-  };
-};
+export const clearCart = () => ({
+  type: CLEAR_CART
+});

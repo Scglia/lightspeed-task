@@ -1,6 +1,11 @@
 import { combineReducers } from "redux";
-import { ADD_TO_CART, REMOVE_FROM_CART } from "../constants/ActionTypes";
+import {
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  CLEAR_CART
+} from "../constants/ActionTypes";
 
+// REDUCERS
 const addedIds = (state = [], action) => {
   switch (action.type) {
     case ADD_TO_CART:
@@ -15,7 +20,8 @@ const addedIds = (state = [], action) => {
         return state.filter(element => element !== action.payload.productId);
       }
       return state;
-
+    case CLEAR_CART:
+      return [];
     default:
       return state;
   }
@@ -34,11 +40,14 @@ const quantityById = (state = {}, action) => {
         ...state,
         [productId]: state[productId] - action.payload.quantityToRemove
       };
+    case CLEAR_CART:
+      return {};
     default:
       return state;
   }
 };
 
+// GETTERS
 export const getQuantity = (state, productId) =>
   state.quantityById[productId] || 0;
 

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import AddToCartButton from "./AddToCartButton";
 
 const Product = styled.div`
   background-color: white;
@@ -25,7 +26,7 @@ const Bottom = styled.div`
 `;
 
 const ProductCard = ({ product, addToCart }) => {
-  const { image, title, price, _id } = product;
+  const { image, title, price, _id, stock } = product;
   return (
     <Product>
       <Link to={`/detail/${_id}`}>
@@ -39,7 +40,10 @@ const ProductCard = ({ product, addToCart }) => {
         </Title>
         <Bottom>
           <div>{price}</div>
-          <button onClick={addToCart}>Add to cart</button>
+          <AddToCartButton
+            addToCart={addToCart}
+            isSoldOut={stock.remaining === 0}
+          />
         </Bottom>
       </Description>
     </Product>

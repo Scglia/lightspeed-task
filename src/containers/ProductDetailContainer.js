@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { getProduct } from "../reducers/products";
 import { addToCart } from "../actions/";
+import AddToCartButton from "../components/AddToCartButton";
 
 const ProductDetailWrapper = styled.div`
   display: flex;
@@ -48,7 +49,10 @@ const ProductDetailContainer = ({ error, loading, product, addToCart }) => {
         <div>{description}</div>
         <div>Quantity left: {stock.remaining}</div>
         <div>Price: {price}</div>
-        <button onClick={() => addToCart(_id)}>Add to cart</button>
+        <AddToCartButton
+          addToCart={() => addToCart(_id)}
+          isSoldOut={stock.remaining === 0}
+        />
       </Details>
     </ProductDetailWrapper>
   );

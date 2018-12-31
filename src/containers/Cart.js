@@ -19,42 +19,67 @@ const Title = styled.td`
   width: 200px;
 `;
 
-const Cart = ({ error, loading, products, removeFromCart, clearCart }) => {
-  if (error) {
-    return <div>Error! {error.message}</div>;
+class Cart extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { isSuccessMessageDisplayed: false };
+    this.handleCheckout = this.handleCheckout.bind(this);
   }
 
-  if (loading) {
-    return <div>Loading...</div>;
+  toggleSuccessMessage() {
+    this.setState({
+      isSuccessMessageDisplayed: !this.state.isSuccessMessageDisplayed
+    });
   }
 
-  if (products.length === 0) {
-    return <CartWrapper>Your cart is empty</CartWrapper>;
+  handleCheckout() {
+    this.props.clearCart();
+    this.toggleSuccessMessage();
   }
 
-  return (
-    <CartWrapper>
-      <table>
-        <tbody>
-          {products.map(product => (
-            <CartItem key={product._id}>
-              <Title>{product.title}</Title>
-              <td>Quantity: {product.quantityInCart}</td>
-              <td>
-                <button onClick={() => removeFromCart(product._id)}>
-                  Remove
-                </button>
-              </td>
-            </CartItem>
-          ))}
-        </tbody>
-      </table>
-      <div>
-        <button onClick={clearCart}>Checkout</button>
-      </div>
-    </CartWrapper>
-  );
-};
+  render() {
+    const { error, loading, products, removeFromCart } = this.props;
+
+    if (error) {
+      return <div>Error! {error.message}</div>;
+    }
+
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+
+    if (this.state.isSuccessMessageDisplayed) {
+      return <CartWrapper>Checkout complete</CartWrapper>;
+    }
+
+    if (products.length === 0) {
+      return <CartWrapper>Your cart is empty</CartWrapper>;
+    }
+
+    return (
+      <CartWrapper>
+        <table>
+          <tbody>
+            {products.map(product => (
+              <CartItem key={product._id}>
+                <Title>{product.title}</Title>
+                <td>Quantity: {product.quantityInCart}</td>
+                <td>
+                  <button onClick={() => removeFromCart(product._id)}>
+                    Remove
+                  </button>
+                </td>
+              </CartItem>
+            ))}
+          </tbody>
+        </table>
+        <div>
+          <button onClick={this.handleCheckout}>Checkout</button>
+        </div>
+      </CartWrapper>
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   products: getCartProducts(state)
