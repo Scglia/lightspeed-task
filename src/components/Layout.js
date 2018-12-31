@@ -19,12 +19,21 @@ const LayoutStyled = styled.div`
   margin: auto;
 `;
 
+const LinkStyled = styled.span`
+  margin-right: 10px;
+`;
+
 const Layout = ({ children }) => (
   <LayoutStyled>
     <GlobalStyle />
     <h1>Shopping Cart Example</h1>
     <nav>
-      <Link to="/">Products</Link>
+      <LinkStyled>
+        <Link to="/">Products</Link>
+      </LinkStyled>
+      <LinkStyled>
+        <Link to="/cart">Cart</Link>
+      </LinkStyled>
     </nav>
     {children}
   </LayoutStyled>

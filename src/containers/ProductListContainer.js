@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { getVisibleProducts } from "../reducers/products";
 import ProductCard from "../components/ProductCard";
+import { addToCart } from "../actions/";
 
 const ProductWrapper = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ const ProductCardStyled = styled.div`
   padding: 15px;
 `;
 
-const ProductListContainer = ({ error, loading, products }) => {
+const ProductListContainer = ({ error, loading, products, addToCart }) => {
   if (error) {
     return <div>Error! {error.message}</div>;
   }
@@ -28,11 +29,10 @@ const ProductListContainer = ({ error, loading, products }) => {
   return (
     <ProductWrapper>
       {products.map(product => (
-        <ProductCardStyled>
+        <ProductCardStyled key={product._id}>
           <ProductCard
-            key={product._id}
             product={product}
-            addToCart={() => null}
+            addToCart={() => addToCart(product._id)}
           />
         </ProductCardStyled>
       ))}
@@ -46,4 +46,7 @@ const mapStateToProps = state => ({
   error: state.products.fetcher.error
 });
 
-export default connect(mapStateToProps)(ProductListContainer);
+export default connect(
+  mapStateToProps,
+  { addToCart }
+)(ProductListContainer);

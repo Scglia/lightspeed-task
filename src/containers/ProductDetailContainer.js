@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { getProduct } from "../reducers/products";
+import { addToCart } from "../actions/";
 
 const ProductDetailWrapper = styled.div`
   display: flex;
@@ -24,7 +25,7 @@ const Details = styled.div`
   }
 `;
 
-const ProductDetailContainer = ({ error, loading, product }) => {
+const ProductDetailContainer = ({ error, loading, product, addToCart }) => {
   if (error) {
     return <div>Error! {error.message}</div>;
   }
@@ -37,7 +38,7 @@ const ProductDetailContainer = ({ error, loading, product }) => {
     return <div>Product not found</div>;
   }
 
-  const { description, image, title, stock, price } = product;
+  const { description, image, title, stock, price, _id } = product;
 
   return (
     <ProductDetailWrapper>
@@ -47,7 +48,7 @@ const ProductDetailContainer = ({ error, loading, product }) => {
         <div>{description}</div>
         <div>Quantity left: {stock.remaining}</div>
         <div>Price: {price}</div>
-        <button>Add to cart</button>
+        <button onClick={() => addToCart(_id)}>Add to cart</button>
       </Details>
     </ProductDetailWrapper>
   );
@@ -59,4 +60,7 @@ const mapStateToProps = (state, { match }) => ({
   error: state.products.fetcher.error
 });
 
-export default connect(mapStateToProps)(ProductDetailContainer);
+export default connect(
+  mapStateToProps,
+  { addToCart }
+)(ProductDetailContainer);
