@@ -1,5 +1,12 @@
 Personal notes:  
-This project was built from the redux cart example to which I added react-router and styled-components.
+This project was built from the redux cart example.
+
+Libraries used in this project:
+- Redux
+- React router
+- styled-components
+
+Tests are missing, I'd like to complete them in the next few days.
 ________________
 
 This project template was built with [Create React App](https://github.com/facebookincubator/create-react-app).
