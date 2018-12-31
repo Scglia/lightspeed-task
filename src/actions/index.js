@@ -42,20 +42,28 @@ export const addToCart = productId => ({
   payload: { productId }
 });
 
-export const removeFromCartAction = ({ productId, quantity }) => ({
+export const removeFromCartAction = ({
+  productId,
+  quantity,
+  quantityToRemove
+}) => ({
   type: REMOVE_FROM_CART,
-  payload: { productId, updatedQuantity: quantity - 1 }
+  payload: {
+    productId,
+    updatedQuantity: quantity - quantityToRemove,
+    quantityToRemove
+  }
 });
 
 // adds the product quantity to the payload
-export const removeFromCart = productId => {
+export const removeFromCart = (productId, quantityToRemove = 1) => {
   return (dispatch, getState) => {
     const { cart } = getState();
-
     dispatch(
       removeFromCartAction({
         productId,
-        quantity: cart.quantityById[productId]
+        quantity: cart.quantityById[productId],
+        quantityToRemove
       })
     );
   };
@@ -66,7 +74,7 @@ export const clearCart = () => {
     const { cart } = getState();
 
     cart.addedIds.forEach(productId => {
-      dispatch(removeFromCart(productId));
+      dispatch(removeFromCart(productId, cart.quantityById[productId]));
     });
   };
 };

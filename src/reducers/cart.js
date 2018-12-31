@@ -12,7 +12,7 @@ const addedIds = (state = [], action) => {
     case REMOVE_FROM_CART:
       if (action.payload.updatedQuantity === 0) {
         // if there's none left in the cart, remove the productId from the array
-        return state.slice(state.indexOf(action.payload.productId), 1);
+        return state.filter(element => element !== action.payload.productId);
       }
       return state;
 
@@ -30,7 +30,10 @@ const quantityById = (state = {}, action) => {
 
     case REMOVE_FROM_CART:
       productId = action.payload.productId;
-      return { ...state, [productId]: state[productId] - 1 };
+      return {
+        ...state,
+        [productId]: state[productId] - action.payload.quantityToRemove
+      };
     default:
       return state;
   }
@@ -38,12 +41,6 @@ const quantityById = (state = {}, action) => {
 
 export const getQuantity = (state, productId) =>
   state.quantityById[productId] || 0;
-
-export const getTotalQuantity = state =>
-  Object.values(state.quantityById).reduce(
-    (sum, quantity) => sum + quantity,
-    0
-  );
 
 export const getAddedIds = state => state.addedIds;
 
