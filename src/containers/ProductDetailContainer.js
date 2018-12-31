@@ -10,6 +10,11 @@ const ProductDetailWrapper = styled.div`
   flex-direction: row;
   flex-wrap: no-wrap;
   margin-top: 10px;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Image = styled.img`
@@ -19,7 +24,11 @@ const Image = styled.img`
 `;
 
 const Details = styled.div`
-  padding: 0 50px;
+  padding-left: 50px;
+
+  @media (max-width: 800px) {
+    padding-left: 0px;
+  }
 
   div {
     padding-bottom: 10px;

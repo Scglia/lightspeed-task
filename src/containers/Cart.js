@@ -19,6 +19,10 @@ const Title = styled.td`
   width: 200px;
 `;
 
+const CheckoutButton = styled.button`
+  margin-top: 10px;
+`;
+
 class Cart extends React.Component {
   constructor(props) {
     super(props);
@@ -74,7 +78,9 @@ class Cart extends React.Component {
           </tbody>
         </table>
         <div>
-          <button onClick={this.handleCheckout}>Checkout</button>
+          <CheckoutButton onClick={this.handleCheckout}>
+            Checkout
+          </CheckoutButton>
         </div>
       </CartWrapper>
     );

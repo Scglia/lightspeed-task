@@ -17,6 +17,7 @@ const GlobalStyle = createGlobalStyle`
 const LayoutStyled = styled.div`
   max-width: 1200px;
   margin: auto;
+  padding: 0 20px;
 `;
 
 const LinkStyled = styled.span`
